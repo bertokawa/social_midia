@@ -21,7 +21,14 @@ class Welcome extends CI_Controller {
 	public function index()
 	{
 		$this->load->view('header.php');
-		$this->load->view('welcome_message.php');
+		$this->load->view('dashboard.php');
+		$this->load->view('footer.php');
+	}
+
+	public function dashboard()
+	{
+		$this->load->view('header.php');
+		$this->load->view('dashboard.php');
 		$this->load->view('footer.php');
 	}
 
@@ -37,10 +44,17 @@ class Welcome extends CI_Controller {
 		$this->load->view('footer.php');
 	}
 
-	public function lista()
+	public function listaTag()
 	{
 		$this->load->view('header.php');
 		$this->load->view('listaTag.php');
+		$this->load->view('footer.php');
+	}
+
+	public function financas()
+	{
+		$this->load->view('header.php');
+		$this->load->view('financas.php');
 		$this->load->view('footer.php');
 	}
 }
