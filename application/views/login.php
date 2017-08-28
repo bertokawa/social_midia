@@ -36,7 +36,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             </p>
             <p>Login in. To see it in action.</p>
             <!-- <form class="m-t" role="form" action=$this->load('welcome_message')> -->
-            <form class="m-t" role="form" action="<?=base_url('index.php/');?>welcome/index/">
+			<form class="m-t" role="form" action="<?=base_url('index.php/');?>welcome/index/">
                 <div class="form-group">
                     <input type="email" class="form-control" placeholder="Username" required="">
                 </div>

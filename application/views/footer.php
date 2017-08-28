@@ -1,10 +1,4 @@
-<?php
-defined('BASEPATH') OR exit('No direct script access allowed');
-?><!DOCTYPE html>
 
-<!DOCTYPE html>
-<html>
-    <body>
 
     <!-- Mainly scripts -->
         <script src="<?php echo base_url("assets/js/jquery-3.1.1.min.js") ?>" ></script>
@@ -59,16 +53,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
                 }, 1300);
 
-
                 var data1 = [
-                    [0,4],[1,8],[2,5],[3,10],[4,4],[5,16],[6,5],[7,11],[8,6],[9,11],[10,30],[11,10],[12,13],[13,4],[14,3],[15,3],[16,6]
+                    [0,4],[1,8],[2,5],[3,10],[4,4],[5,16],[6,5],[7,11],[8,6],
+                    [9,11],[10,30],[11,10],[12,13],[13,4],[14,3],[15,3],[16,6]
                 ];
+
                 var data2 = [
-                    [0,1],[1,0],[2,2],[3,0],[4,1],[5,3],[6,1],[7,5],[8,2],[9,3],[10,2],[11,1],[12,0],[13,2],[14,8],[15,0],[16,0]
+                    [0,1],[1,0],[2,2],[3,0],[4,1],[5,3],[6,1],[7,5],[8,2],
+                    [9,3],[10,2],[11,1],[12,0],[13,2],[14,8],[15,0],[16,0]
                 ];
-                $("#flot-dashboard-chart").length && $.plot($("#flot-dashboard-chart"), [
-                    data1, data2
-                ],
+
+                $("#flot-dashboard-chart").length && $.plot($("#flot-dashboard-chart"),
+                    [data1, data2],
                         {
                             series: {
                                 lines: {
@@ -146,5 +142,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
             });
         </script>
+    </div>
+</nav>
     </body>
 </html>
