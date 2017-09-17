@@ -18,6 +18,20 @@ class Welcome extends CI_Controller {
 	 * map to /index.php/welcome/<method_name>
 	 * @see https://codeigniter.com/user_guide/general/urls.html
 	 */
+
+	public function recebeDados() {
+		$user_post  = $this -> input -> post('usuario');
+		$senha_post = $this -> input -> post('senha');
+		
+		$this->load->model('user_model');
+		$res=$this->user_model->validaDado($user_post, $senha_post);
+		if ($res == True) {
+			echo "deu boa";
+		} else {
+			echo "deu ruim";
+		}
+	}
+
 	public function index()
 	{
 		$this->load->view('header.php');
@@ -34,7 +48,14 @@ class Welcome extends CI_Controller {
 
 	public function login()
 	{
+		
+		//echo 'oi';
+		$this->load->model('user_model');
+		$teste = $this->user_model->getData();
+		//var_dump($teste);
 		$this->load->view('login.php');
+
+		//$this->load->view('login.php', array('usuario' => $teste ));
 	}
 
 	public function cadastro()

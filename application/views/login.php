@@ -1,9 +1,12 @@
 
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-?><!DOCTYPE html>
+
+//var_dump($usuario);
+?>
 
 <!DOCTYPE html>
+
 <html>
 
 <head>
@@ -36,12 +39,31 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             </p>
             <p>Login in. To see it in action.</p>
             <!-- <form class="m-t" role="form" action=$this->load('welcome_message')> -->
-			<form class="m-t" role="form" action="<?=base_url('index.php/');?>welcome/index/">
+			<form 
+                class="m-t"
+                role="form"
+                method = "post"
+                action="<?=base_url('index.php/');?>welcome/recebeDados/"
+                >
+
                 <div class="form-group">
-                    <input type="email" class="form-control" placeholder="Username" required="">
+                    <input
+                        name="usuario"
+                        type="email"
+                        class="form-control"
+                        placeholder="Username"
+                        required=""
+                    >
                 </div>
+                
                 <div class="form-group">
-                    <input type="password" class="form-control" placeholder="Password" required="">
+                    <input 
+                        name="senha"
+                        type="password"
+                        class="form-control"
+                        placeholder="Password" 
+                        required=""
+                    >
                 </div>
                 <button type="submit" class="btn btn-primary block full-width m-b">Login</button>
 
