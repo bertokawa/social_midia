@@ -17,8 +17,13 @@ class User_model extends CI_Model {
     public function validaDado($user, $senha) {
     	$query = $this->db->query("SELECT password FROM usuarios WHERE user='$user'")->result_array();
     	//$query = $this->db->get_where('user',$user);
-    	$pass_db = $query[0]['password'];
-    
+
+        if (empty($query)) {
+            return False;
+        } else {
+            $pass_db = $query[0]['password'];
+        }
+
     	if($pass_db == $senha){
     		return True;
     	} else {

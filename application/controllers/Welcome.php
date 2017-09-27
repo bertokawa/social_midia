@@ -21,12 +21,14 @@ class Welcome extends CI_Controller {
 
 	public function recebeDados() {
 		$user_post  = $this -> input -> post('usuario');
-		$senha_post = $this -> input -> post('senha');
-		
+		$senha_post = md5($this -> input -> post('senha'));
+
 		$this->load->model('user_model');
 		$res=$this->user_model->validaDado($user_post, $senha_post);
+
 		if ($res == True) {
 			echo "deu boa";
+			$this->index();
 		} else {
 			echo "deu ruim";
 		}
@@ -48,7 +50,6 @@ class Welcome extends CI_Controller {
 
 	public function login()
 	{
-		
 		//echo 'oi';
 		$this->load->model('user_model');
 		$teste = $this->user_model->getData();
