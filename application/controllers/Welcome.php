@@ -27,7 +27,7 @@ class Welcome extends CI_Controller {
 		$res=$this->user_model->validaDado($user_post, $senha_post);
 
 		if ($res == True) {
-			echo "deu boa";
+			#echo "deu boa";
 			$this->index();
 		} else {
 			echo "deu ruim";
@@ -36,6 +36,7 @@ class Welcome extends CI_Controller {
 
 	public function index()
 	{
+		$this->load->view('head.php');
 		$this->load->view('header.php');
 		$this->load->view('dashboard.php');
 		$this->load->view('footer.php');
@@ -43,6 +44,7 @@ class Welcome extends CI_Controller {
 
 	public function dashboard()
 	{
+		$this->load->view('head.php');
 		$this->load->view('header.php');
 		$this->load->view('dashboard.php');
 		$this->load->view('footer.php');
@@ -54,13 +56,17 @@ class Welcome extends CI_Controller {
 		$this->load->model('user_model');
 		$teste = $this->user_model->getData();
 		//var_dump($teste);
+
+		$this->load->view('head.php');
 		$this->load->view('login.php');
+		$this->load->view('footer.php');
 
 		//$this->load->view('login.php', array('usuario' => $teste ));
 	}
 
 	public function cadastro()
 	{
+		$this->load->view('head.php');
 		$this->load->view('header.php');
 		$this->load->view('cadastroTag.php');
 		$this->load->view('footer.php');
@@ -68,6 +74,7 @@ class Welcome extends CI_Controller {
 
 	public function listaTag()
 	{
+		$this->load->view('head.php');
 		$this->load->view('header.php');
 		$this->load->view('listaTag.php');
 		$this->load->view('footer.php');
@@ -75,6 +82,7 @@ class Welcome extends CI_Controller {
 
 	public function financas()
 	{
+		$this->load->view('head.php');
 		$this->load->view('header.php');
 		$this->load->view('financas.php');
 		$this->load->view('footer.php');
