@@ -63,8 +63,7 @@
  * Different environments will require different levels of error reporting.
  * By default development will show errors but testing and live will hide them.
  */
-switch (ENVIRONMENT)
-{
+switch (ENVIRONMENT) {
 	case 'development':
 		error_reporting(-1);
 		ini_set('display_errors', 1);
@@ -73,12 +72,9 @@ switch (ENVIRONMENT)
 	case 'testing':
 	case 'production':
 		ini_set('display_errors', 0);
-		if (version_compare(PHP_VERSION, '5.3', '>='))
-		{
+		if (version_compare(PHP_VERSION, '5.3', '>=')) {
 			error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED & ~E_STRICT & ~E_USER_NOTICE & ~E_USER_DEPRECATED);
-		}
-		else
-		{
+		} else {
 			error_reporting(E_ALL & ~E_NOTICE & ~E_STRICT & ~E_USER_NOTICE);
 		}
 	break;
@@ -236,31 +232,23 @@ switch (ENVIRONMENT)
 	define('SYSDIR', basename(BASEPATH));
 
 	// The path to the "application" directory
-	if (is_dir($application_folder))
-	{
-		if (($_temp = realpath($application_folder)) !== FALSE)
-		{
+	if (is_dir($application_folder)) {
+		if (($_temp = realpath($application_folder)) !== FALSE) {
 			$application_folder = $_temp;
-		}
-		else
-		{
+		} else {
 			$application_folder = strtr(
 				rtrim($application_folder, '/\\'),
 				'/\\',
 				DIRECTORY_SEPARATOR.DIRECTORY_SEPARATOR
 			);
 		}
-	}
-	elseif (is_dir(BASEPATH.$application_folder.DIRECTORY_SEPARATOR))
-	{
+	} elseif (is_dir(BASEPATH.$application_folder.DIRECTORY_SEPARATOR)) {
 		$application_folder = BASEPATH.strtr(
 			trim($application_folder, '/\\'),
 			'/\\',
 			DIRECTORY_SEPARATOR.DIRECTORY_SEPARATOR
 		);
-	}
-	else
-	{
+	} else {
 		header('HTTP/1.1 503 Service Unavailable.', TRUE, 503);
 		echo 'Your application folder path does not appear to be set correctly. Please open the following file and correct this: '.SELF;
 		exit(3); // EXIT_CONFIG

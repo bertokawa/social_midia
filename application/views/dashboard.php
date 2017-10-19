@@ -60,7 +60,11 @@
                 <div class="col-md-3">
                     <div class="statistic-box">
                     <h4>
-                        Project Beta progress
+                        Project Beta progress <?php 
+                            foreach ($nomes as $value) {
+                                echo $value . "<br>";
+                            }
+                        ?>
                     </h4>
                     <p>
                         You have two project with not compleated task.
@@ -76,7 +80,10 @@
                             </div>
                         </div>
                         <div class="m-t">
-                            <small>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</small>
+                            <small>
+                                Lorem Ipsum is simply dummy text of the printing and 
+                                typesetting industry.
+                            </small>
                         </div>
                     </div>
                 </div>

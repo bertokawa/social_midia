@@ -29,8 +29,7 @@
                     class="m-t"
                     role="form"
                     method = "post"
-                    action="<?=base_url('index.php/');?>welcome/recebeDados/"
-                    >
+                    action="<?php echo base_url('index.php/');?>welcome/recebeDados/">
 
                     <div class="form-group">
                         <input
@@ -84,8 +83,8 @@
         </div>
 
         <!-- Mainly scripts -->
-        <script src="<?php echo base_url("assets/js/jquery-3.1.1.min.js")?>"</script>
-        <script src="<?php echo base_url("assets/js/bootstrap.min.js")?>"</script>
+        <script src="<?php echo base_url("assets/js/jquery-3.1.1.min.js")?>"></script>
+        <script src="<?php echo base_url("assets/js/bootstrap.min.js")?>"></script>
 
     </body>
 </html>
