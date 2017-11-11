@@ -1,5 +1,5 @@
 <?php
-class Lista_mentions extends CI_Model {
+class Mention_model extends CI_Model {
 
     public function __construct() {
         parent::__construct();

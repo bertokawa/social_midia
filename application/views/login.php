@@ -70,7 +70,7 @@
                         </small>
                     </p>
                     
-                    <a class="btn btn-sm btn-white btn-block" href="register.html">
+                    <a class="btn btn-sm btn-white btn-block" href="<?php echo base_url('index.php/');?>register/registro/">
                         Create an account
                     </a>
                 </form>

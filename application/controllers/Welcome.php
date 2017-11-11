@@ -63,7 +63,7 @@ class Welcome extends CI_Controller {
 
 			$this->index();
 		} else {
-			echo "deu ruim";
+			$this->load->view('notfound');
 		}
 	}
 
@@ -74,25 +74,27 @@ class Welcome extends CI_Controller {
 			$tag = '#'.substr($tag, 0, strlen($tag));
 		}
 
-		$this->load->model('tag_cadastro');
-		$this->tag_cadastro->adicionaTag($tag);
+		$this->load->model('tag_model');
+		$this->tag_model->adicionaTag($tag);
 
 		$this->index();
 	}
 
 
 	public function index() {
-		$this->load->model('lista_mentions');
-		$res = $this->lista_mentions->listagem_mentions();
-
-		$this->load->model('tag_cadastro');
-		$teste = $this->tag_cadastro->getTag();
-
-		$conteudo = array('nomes'=>$res, 'tags'=>$teste );
+		$this->load->model('mention_model');
+		$this->load->model('tag_model');
 
 		$this->load->view('head');
 		$this->load->view('header');
-		$this->load->view('mentions', $conteudo);
+
+		if ($this->tag_model->esta_vazia() != 0) {
+			$res = $this->mention_model->listagem_mentions();
+			$teste = $this->tag_model->getTag();
+			$conteudo = array('nomes'=>$res, 'tags'=>$teste );
+			$this->load->view('mentions', $conteudo);
+		}
+		
 		$this->load->view('footer');
 	}
 
@@ -116,8 +118,8 @@ class Welcome extends CI_Controller {
 	}
 
 	public function listaTag() {
-		$this->load->model('tag_cadastro');
-		$teste = $this->tag_cadastro->getTag();
+		$this->load->model('tag_model');
+		$teste = $this->tag_model->getTag();
 
 		$conteudo = array('tags' => $teste );
 

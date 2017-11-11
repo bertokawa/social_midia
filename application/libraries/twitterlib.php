@@ -9,31 +9,41 @@
 class Twitterlib {
 
 	var $terms;
+	var $id_terms;
 
 	public function __construct()
 	{
 		ini_set('precision', 20); // http://stackoverflow.com/a/8106127/908257
 		$this->CI = & get_instance();
 		$this->terms = $this->searchterms();
+		$this->id_terms = $this->search_id_terms();
 	}
 
 	/**
 	* Get all of the search terms from the db and return them in an array
 	* output: array or false
 	*/
-	public function searchterms($result=false)
-	{
+	public function searchterms($result=false) {
 		$this->CI->db->select('term');
 		$query = $this->CI->db->get('search_tags');
-		if ( $query->num_rows() > 0 )
-		{
-			$result = $query->result_array();
-			foreach ($result as $row=>$data)
-			{
-				
 
+		if ($query->num_rows() > 0) {
+			$result = $query->result_array();
+			
+			foreach ($result as $row=>$data) {
 				$result[$row]=$data['term'];
-				
+			}
+		}
+
+		return $result;
+	}
+
+	public function search_id_terms($result=false) {
+		if (sizeof($this->terms) > 0) {
+			foreach ($this->terms as $row=>$data) {
+				$query_tag_id=$this->CI->db->query("SELECT id FROM search_tags WHERE term='$data'")->result_array();
+				$query_tag_id=$query_tag_id[0]['id'];
+				$result[$data]=$query_tag_id;
 			}
 		}
 
@@ -82,9 +92,7 @@ class Twitterlib {
 					fwrite($fp, $request);
 					// set stream to non-blocking - research if this is really needed.
 					// stream_set_blocking($fp, 0);
-					while(!feof($fp))
-					{
-
+					while(!feof($fp)) {
 						$read   = array($fp);
 						$write  = null;
 						$except = null;
@@ -187,7 +195,6 @@ class Twitterlib {
 	*
 	*/
 	public function searchone($cachetime=null) {
-
 		// faz a conexão com o TWITTER
 		// do oauth
 		$this->CI->load->library('twitteroauth');
@@ -208,7 +215,7 @@ class Twitterlib {
 			die;
 		} else {
 			// if the number of minutes to cache has been set
-			foreach ($this->terms as $key => $query) {
+			foreach ($this->terms as $key => $query) { 
 				# code...
 			
 			if($cachetime != null) {
@@ -217,11 +224,12 @@ class Twitterlib {
 			}
 
 			// if we are not caching or if our cache has run out
-			if( $cachetime == null || ! $content = $this->CI->cache->get('twitter-api-search') ) {
+			if($cachetime == null || ! $content = $this->CI->cache->get('twitter-api-search') ) {
 
 				//$query=implode('+OR+',$this->terms);
 
 				$query_data = array('q' => $query, 'include_entities' => 'true','count' => 15,'result_type'=>'mixed');
+
 				$url = 'https://api.twitter.com/1.1/search/tweets.json';
 
 				$content=$connection->get($url,$query_data);
@@ -298,26 +306,31 @@ class Twitterlib {
 	* input: $data['id_str'], $data['user']['id_str'] OR data['id_str'], $data['from_user_id_str']
 	* output: true/false
 	*/
-	function save($data=null, $query=null,$result=false)
-	{
-		//var_dump($data);
-		//die;
-		$quando=null;
+	function save($data=null,$query=null,$result=false) {
+		$var_db_data=null;
+
 		if ((is_array($data) && isset($data['id_str'])) || (is_object($data) && isset($data->id_str))) {
-			if(is_array($data) && isset($data['user']['id_str'])) { // if we are dealing with streaming api
+
+			// if we are dealing with streaming api
+			if(is_array($data) && isset($data['user']['id_str'])) { 
 				$user_id=$data['user']['id_str'];
 				$tweet_id=$data['id_str'];
 				$tweet_content=$data->text;
-			} else if (is_array($data) && isset($data['from_user_id_str'])) { // if we are dealing with search api
+			}
+
+			// if we are dealing with search api
+			else if (is_array($data) && isset($data['from_user_id_str'])) { 
 				$user_id=$data['from_user_id_str'];
 				$tweet_id=$data['id_str'];
 				$tweet_content=$data->text;
-			} else if (is_object($data) && isset($data->user->id_str)) {
+			}
+
+			else if (is_object($data) && isset($data->user->id_str)) {
 				$user_id=$data->user->id_str;
 				$tweet_id=$data->id_str;
 				$tweet_content=$data->text;
 
-				$quando=$data->created_at;
+				$var_db_data=$data->created_at;
 			}
 
 			// if we have detected a user id in the tweet array
@@ -326,10 +339,12 @@ class Twitterlib {
 				// passa ao user_id, o id referente ao usuario do nosso site.
 				
 				$user_session = $_SESSION['id_user'];
-				$quando=$data->created_at;	
+				$var_db_data=$data->created_at;
+
+				$hashtag_id=$this->id_terms[$query];
 
 				// set input
-				$input=array('tweet_id'=> $tweet_id,'tweet_user'=>$user_id, 'user_id'=>$user_session, 'tweet_content'=>$tweet_content, 'hashtag'=>$query, 'created_at'=>$quando);
+				$input=array('tweet_id'=> $tweet_id,'tweet_user'=>$user_id, 'user_id'=>$user_session, 'tweet_content'=>$tweet_content, 'tag_id'=>$hashtag_id, 'hashtag'=>$query, 'created_at'=>$var_db_data);
 				
 				// save tweet in db
 				$result=$this->CI->db->insert('tweets',$input);

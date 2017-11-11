@@ -114,7 +114,7 @@
                     <ul class="nav navbar-top-links navbar-right">
                         <li>
                             <span class="m-r-sm text-muted welcome-message">
-                                Welcome to Sniffer Dog
+                                Welcome to Social Midia
                             </span>
                         </li>
 

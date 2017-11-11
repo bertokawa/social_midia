@@ -1,9 +1,14 @@
 <?php
-class Tag_cadastro extends CI_Model {
+class tag_model extends CI_Model {
 
     public function __construct() {
         parent::__construct();
         $this->load->database();
+    }
+
+    public function esta_vazia () {
+        $query = $this->db->query("SELECT * FROM search_tags LIMIT 1");
+        return $query->num_rows();
     }
 
     public function adicionaTag($tagBD) {
@@ -14,7 +19,6 @@ class Tag_cadastro extends CI_Model {
             if ($value['term'] == $tagBD) {
                 $flag = false;
             }
-    
         }
         
         if ($flag == true) {

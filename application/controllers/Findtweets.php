@@ -23,9 +23,15 @@ class Findtweets extends CI_Controller {
 
     // search for tweets by hashtag using api v1.1
     public function searchone($cachetime=null) {
+        $this->load->model('tag_model');
+
         $this->load->view('head.php');
         $this->load->view('header.php');
-        $this->twitterlib->searchone($cachetime);
+
+        if ($this->tag_model->esta_vazia() != 0) {
+            $this->twitterlib->searchone($cachetime);
+        }
+
         $this->load->view('footer.php');
     }
 }
